@@ -1,16 +1,16 @@
+.container{
+  width: 90%;
+  margin: 0 auto;
+}
+
 .App-header {
-  background-color: #222;
+  background-color: #1b5950;
   color: white;
   display: flex;
   justify-content: space-between;
-  height: 75px;
   padding: 20px;
   padding-right: 40%;
   padding-left: 5%;
-}
-
-.App-header > h1 {
-  color: dodgerblue;
 }
 
 .App-intro {
@@ -37,10 +37,6 @@ form {
   width: 80%;
   margin: auto;
 }
-
-/*.category-holder{*/
-/*  text-align: left;*/
-/*}*/
 
 .play-category{
   cursor: pointer;

@@ -24,8 +24,10 @@
     margin-top: 5px;
     background-color: dodgerblue;
     color: white;
-    padding: 3px 5px;
+    padding: 6px 5px;
     align-self: center;
+    outline: none;
+    border: none;
 }
 
 div.button {

@@ -63,13 +63,14 @@ class QuestionView extends Component {
 
   getByCategory= (id) => {
     $.ajax({
-      url: `/categories/${id}/questions`, //TODO: update request URL
+      url: `api/questions?category_id=${id}`,
       type: "GET",
       success: (result) => {
         this.setState({
           questions: result.questions,
           totalQuestions: result.total_questions,
-          currentCategory: result.current_category })
+          // currentCategory: result.current_category
+        })
         return;
       },
       error: (error) => {
@@ -128,10 +129,10 @@ class QuestionView extends Component {
       <div className="question-view">
         <div className="categories-list">
           <h2 onClick={() => {this.getQuestions()}}>Categories</h2>
-          <ul>
+          <ul className='categories-section'>
             {Array.from(this.state.categories).map((category, ind ) => (
-              <li key={category.id} onClick={() => {this.getByCategory(category)}}>
-                {category.type}
+              <li key={category.id} onClick={() => {this.getByCategory(category.id)}}>
+                <p>{category.type}</p>
                 <img className="category" src={`${category.type.toLowerCase()}.svg`}/>
               </li>
             ))}

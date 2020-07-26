@@ -1,7 +1,33 @@
 .form-view > label {
-  padding: 0px 0px 10px;
+  padding: 0 10px;
 }
 
 #add-form {
   text-align: center;
+}
+
+.form-view {
+  width: 30%;
+  margin: 0 auto;
+}
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.form-view input[type=submit], .submit-guess{
+  width: 50%;
+  background-color: #1b5950 !important;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }

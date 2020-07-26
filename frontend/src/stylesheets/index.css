@@ -3,3 +3,12 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.categories-section{
+  padding: 0 40px;
+}
+
+.categories-section li{
+  display: flex;
+  justify-content: space-between;
+}

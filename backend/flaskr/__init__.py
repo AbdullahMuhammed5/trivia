@@ -14,12 +14,12 @@ def create_app(test_config=None):
   app = Flask(__name__)
   setup_db(app)
   '''
-  @TODO: Set up CORS. Allow '*' for origins. Delete the sample route after completing the TODOs
+  Set up CORS. Allow '*' for origins. Delete the sample route after completing the TODOs
   '''
   CORS(app, resources={r"/api/*": {"origins": "*"}})
 
   '''
-  @TODO: Use the after_request decorator to set Access-Control-Allow
+  Using the after_request decorator to set Access-Control-Allow
   '''
   # CORS Headers
   @app.after_request
@@ -30,9 +30,7 @@ def create_app(test_config=None):
 
 
   '''
-  @TODO:
-  Create an endpoint to handle GET requests
-  for all available categories.
+  GET requests for all available categories.
   '''
   @app.route('/api/categories')
   def list_categories():
@@ -56,16 +54,20 @@ def create_app(test_config=None):
       return current_page
 
   '''
-  @TODO: 
-  Create an endpoint to handle GET requests for questions, 
-  including pagination (every 10 questions). 
+  - GET requests for questions, including pagination (every 10 questions).
   This endpoint should return a list of questions, 
-  number of total questions, current category, categories. 
+  number of total questions, current category, categories.
 
   TEST: At this point, when you start the application
   you should see questions and categories generated,
   ten questions per page and pagination at the bottom of the screen for three pages.
   Clicking on the page numbers should update the questions. 
+
+  - Get questions based on category.
+
+  TEST: In the "List" tab / main screen, clicking on one of the
+  categories in the left column will cause only questions of that
+  category to be shown.
   '''
   @app.route('/api/questions')
   def retrieve_questions():
@@ -90,8 +92,7 @@ def create_app(test_config=None):
     })
 
   '''
-  @TODO: 
-  Create an endpoint to DELETE question using a question ID. 
+  DELETE question using a question ID.
 
   TEST: When you click the trash icon next to a question, the question will be removed.
   This removal will persist in the database and when you refresh the page. 
@@ -115,8 +116,7 @@ def create_app(test_config=None):
       abort(422)
 
   '''
-  @TODO: 
-  Create an endpoint to POST a new question, 
+  POST request for creating a new question,
   which will require the question and answer text, 
   category, and difficulty score.
 
@@ -145,7 +145,7 @@ def create_app(test_config=None):
       abort(422)
 
   '''
-  Create a POST endpoint to get questions based on a search term.
+  Get questions based on a search term.
   It should return any questions for whom the search term 
   is a substring of the question. 
 
@@ -170,13 +170,7 @@ def create_app(test_config=None):
     except:
       abort(422)
 
-  '''
-  Create a GET endpoint to get questions based on category.
 
-  TEST: In the "List" tab / main screen, clicking on one of the 
-  categories in the left column will cause only questions of that 
-  category to be shown. 
-  '''
   # done
   '''
   POST endpoint to get questions to play the quiz.
@@ -200,7 +194,7 @@ def create_app(test_config=None):
       print(category)
       print(previous_questions)
 
-      if category == None: # return question for any category
+      if category == 0: # return question for any category
         question = Question.query.filter(Question.id.notin_(previous_questions)) \
                           .order_by(func.random()).limit(1).first()
       else: # return question form specific category

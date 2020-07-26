@@ -37,3 +37,11 @@ form {
   width: 80%;
   margin: auto;
 }
+
+/*.category-holder{*/
+/*  text-align: left;*/
+/*}*/
+
+.play-category{
+  cursor: pointer;
+}

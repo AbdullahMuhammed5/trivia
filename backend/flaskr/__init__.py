@@ -30,8 +30,8 @@ def create_app(test_config=None):
 
 
   '''
-  @TODO: 
-  Create an endpoint to handle GET requests 
+  @TODO:
+  Create an endpoint to handle GET requests
   for all available categories.
   '''
   @app.route('/api/categories')
@@ -84,7 +84,9 @@ def create_app(test_config=None):
     return jsonify({
         'success': True,
         'questions': questions_paginated,
-        'total_questions': len(Question.query.all())
+        'total_questions': len(Question.query.all()),
+        'categories': [category.format() for category in Category.query.all()],
+        'current_category': 1
     })
 
   '''
@@ -143,8 +145,7 @@ def create_app(test_config=None):
       abort(422)
 
   '''
-  @TODO: 
-  Create a POST endpoint to get questions based on a search term. 
+  Create a POST endpoint to get questions based on a search term.
   It should return any questions for whom the search term 
   is a substring of the question. 
 
@@ -170,8 +171,7 @@ def create_app(test_config=None):
       abort(422)
 
   '''
-  @TODO: 
-  Create a GET endpoint to get questions based on category. 
+  Create a GET endpoint to get questions based on category.
 
   TEST: In the "List" tab / main screen, clicking on one of the 
   categories in the left column will cause only questions of that 
@@ -179,8 +179,7 @@ def create_app(test_config=None):
   '''
   # done
   '''
-  @TODO: 
-  Create a POST endpoint to get questions to play the quiz. 
+  POST endpoint to get questions to play the quiz.
   This endpoint should take category and previous question parameters 
   and return a random questions within the given category, 
   if provided, and that is not one of the previous questions. 
@@ -198,17 +197,24 @@ def create_app(test_config=None):
 
       category = body.get('category', None)
       previous_questions = body.get('previous_questions', None)
+      print(category)
+      print(previous_questions)
 
-      question = Question.query.filter_by(category=category).filter(Question.id.notin_(previous_questions)) \
-                    .order_by(func.random()).limit(1).first()
-
-      question_data = {
-        'id': question.id,
-        'question': question.question,
-        'answer': question.answer,
-        'difficulty': question.difficulty,
-        'category': question.category
-      }
+      if category == None: # return question for any category
+        question = Question.query.filter(Question.id.notin_(previous_questions)) \
+                          .order_by(func.random()).limit(1).first()
+      else: # return question form specific category
+        question = Question.query.filter_by(category=category).filter(Question.id.notin_(previous_questions)) \
+                          .order_by(func.random()).limit(1).first()
+      question_data = None
+      if question:
+        question_data = {
+          'id': question.id,
+          'question': question.question,
+          'answer': question.answer,
+          'difficulty': question.difficulty,
+          'category': question.category
+        }
 
       return jsonify({
         'success': True,
@@ -219,9 +225,8 @@ def create_app(test_config=None):
       abort(422)
 
   '''
-  @TODO: 
-  Create error handlers for all expected errors 
-  including 404 and 422. 
+  Error handlers for all expected errors
+  including 400, 404, 422.
   '''
   @app.errorhandler(404)
   def not_found(error):

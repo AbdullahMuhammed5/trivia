@@ -345,7 +345,7 @@ This endpoint either creates a new question or returns search results.
             "total_questions": 18
         }
 
-#### POST /quizzes
+#### POST api/get-question
 
 * General:
   * Allows users to play the quiz game.

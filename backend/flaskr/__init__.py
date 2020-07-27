@@ -96,20 +96,17 @@ def create_app(test_config=None):
     '''
     @app.route('/api/questions/<int:question_id>', methods=['DELETE'])
     def delete_question(question_id):
-        try:
-            question = Question.query.filter(Question.id == question_id).one_or_none()
+        question = Question.query.filter(Question.id == question_id).one_or_none()
 
-            if question is None:
-                abort(404)
+        if question is None:
+            abort(404)
 
-            question.delete()
+        question.delete()
 
-            return jsonify({
-                'success': True,
-                'deleted': question_id
-            })
-        except:
-            abort(422)
+        return jsonify({
+            'success': True,
+            'deleted': question_id
+        })
 
     '''
     POST request for creating a new question,
@@ -122,12 +119,12 @@ def create_app(test_config=None):
     '''
     @app.route('/api/questions', methods=['POST'])
     def create_question():
-        body = request.get_json()
+        body = request.get_json() if request.get_json() else abort(400)
 
-        question = body.get('question', None)
-        answer = body.get('answer', None)
-        difficulty = body.get('difficulty', None)
-        category_id = body.get('category', None)
+        question = body.get('question')
+        answer = body.get('answer')
+        difficulty = body.get('difficulty')
+        category_id = body.get('category')
 
         try:
             question = Question(question=question, answer=answer,
@@ -138,7 +135,7 @@ def create_app(test_config=None):
               'success': True,
               'created': question.id
             })
-        except:
+        except Exception:
             abort(422)
 
     '''
@@ -164,7 +161,7 @@ def create_app(test_config=None):
               'questions': paginated_results,
               'total_results': len(results)
             })
-        except:
+        except Exception:
             abort(422)
 
     '''
@@ -179,12 +176,10 @@ def create_app(test_config=None):
     '''
     @app.route('/api/get-question', methods=['POST'])
     def get_question():
+        body = request.get_json() if request.get_json() else abort(400)
+        category = body.get('category')
+        previous_questions = body.get('previous_questions')
         try:
-            body = request.get_json()
-
-            category = body.get('category', None)
-            previous_questions = body.get('previous_questions', None)
-
             if category == 0: # return question from any category
                 question = Question.query.filter(Question.id.notin_(previous_questions)) \
                                 .order_by(func.random()).limit(1).first()
@@ -192,6 +187,7 @@ def create_app(test_config=None):
                 question = Question.query.filter_by(category=category) \
                                 .filter(Question.id.notin_(previous_questions)) \
                                 .order_by(func.random()).limit(1).first()
+
             question_data = None
             if question:
                 question_data = {
@@ -207,7 +203,7 @@ def create_app(test_config=None):
                 'question': question_data,
                 'previous_questions': previous_questions
             })
-        except:
+        except Exception:
             abort(422)
 
     '''

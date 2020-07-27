@@ -19,7 +19,7 @@ class FormView extends Component {
 
   componentDidMount(){
     $.ajax({
-      url: `api/categories`, //TODO: update request URL
+      url: `api/categories`,
       type: "GET",
       success: (result) => {
         this.setState({ categories: result.categories })
@@ -95,7 +95,7 @@ class FormView extends Component {
             <select name="category" onChange={this.handleChange}>
               {Array.from(this.state.categories).map(category => {
                   return (
-                    <option key={category.id} value={category.id}>{category.id}</option>
+                    <option key={category.id} value={category.id}>{category.type}</option>
                   )
                 })}
             </select>

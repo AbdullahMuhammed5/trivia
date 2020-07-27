@@ -85,7 +85,6 @@ def create_app(test_config=None):
             'questions': questions_paginated,
             'total_questions': len(Question.query.all()),
             'categories': [category.format() for category in Category.query.all()],
-            'current_category': 1
         })
 
     '''

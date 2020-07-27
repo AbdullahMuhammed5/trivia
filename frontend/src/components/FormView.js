@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import history from "../History";
 
 import '../stylesheets/FormView.css';
 
 class FormView extends Component {
+
   constructor(props){
     super();
     this.state = {
@@ -50,6 +52,8 @@ class FormView extends Component {
       crossDomain: true,
       success: (result) => {
         document.getElementById("add-question-form").reset();
+        // let history = useHistory();
+        history.push('/');
         return;
       },
       error: (error) => {

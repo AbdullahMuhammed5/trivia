@@ -23,7 +23,7 @@ class QuestionView extends Component {
 
   getQuestions = () => {
     $.ajax({
-      url: `/api/questions?page=${this.state.page}`, //TODO: update request URL
+      url: `/api/questions?page=${this.state.page}`,
       type: "GET",
       success: (result) => {
         // console.log(result)
@@ -33,7 +33,6 @@ class QuestionView extends Component {
           categories: result.categories,
           // currentCategory: result.current_category
         })
-        console.log(this.state.categories);
         return;
       },
       error: (error) => {
@@ -114,6 +113,7 @@ class QuestionView extends Component {
           type: "DELETE",
           success: (result) => {
             this.getQuestions();
+            return;
           },
           error: (error) => {
             alert('Unable to load questions. Please try your request again')

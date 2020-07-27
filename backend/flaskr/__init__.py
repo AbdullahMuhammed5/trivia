@@ -110,7 +110,7 @@ def create_app(test_config=None):
 
       return jsonify({
         'success': True,
-        'deleted': book_id
+        'deleted': question_id
       })
     except:
       abort(422)
